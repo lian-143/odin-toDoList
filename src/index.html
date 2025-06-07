@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To Do List</title>
+    <!-- <link rel="stylesheet" href="./style.css" /> -->
+  </head>
+  <body>
+    <h1>Odin To Do List</h1>
+    <div class="project-container">
+      <div class="project-list">
+        <h1>Projects</h1>
+        <ul class="allProjects" data-lists>
+          <li>Default</li>
+          <li>Odin Project</li>
+          <li>JavaScript Course</li>
+        </ul>
+      </div>
+      <form action="" data-projectList-form>
+        <input
+          type="text"
+          data-projectList-input
+          id="name"
+          name="name"
+          placeholder="Add Project"
+        />
+        <input type="button" value="+" />
+      </form>
+    </div>
+
+    <div class="toDoListContainer">
+      <div class="toDoHeader">
+        <h1>To Do List</h1>
+        <h2>0 tasks remaining</h2>
+        <input type="text" id="name" name="name" placeholder="New ToDo" />
+      </div>
+      <form action="">
+        <input type="checkbox" name="tasks" id="tasks" />
+        <label for="tasks">Finish Backlogs</label>
+        <input type="button" value="Delete task" />
+      </form>
+    </div>
+  </body>
+</html>
