@@ -11,21 +11,17 @@
     <div class="project-container">
       <div class="project-list">
         <h1>Projects</h1>
-        <ul class="allProjects" data-lists>
-          <li>Default</li>
-          <li>Odin Project</li>
-          <li>JavaScript Course</li>
-        </ul>
+        <ul class="allProjects" data-lists></ul>
       </div>
       <form action="" data-projectList-form>
         <input
           type="text"
           data-projectList-input
-          id="name"
-          name="name"
+          id="project-name"
+          name="project-name"
           placeholder="Add Project"
         />
-        <input type="button" value="+" />
+        <button class="saveBtn">+</button>
       </form>
     </div>
 
@@ -33,13 +29,30 @@
       <div class="toDoHeader">
         <h1>To Do List</h1>
         <h2>0 tasks remaining</h2>
-        <input type="text" id="name" name="name" placeholder="New ToDo" />
       </div>
-      <form action="">
-        <input type="checkbox" name="tasks" id="tasks" />
-        <label for="tasks">Finish Backlogs</label>
-        <input type="button" value="Delete task" />
+    </div>
+    <div class="taskContainer">
+      <form action="" data-taskList-form>
+        <div class="inputForm-newTodo">
+          <input
+            type="text"
+            data-taskList-input
+            id="task-name"
+            name="task-name"
+            placeholder="New ToDo"
+          />
+          <button class="saveBtnTask">+</button>
+          <div class="taskLists" data-tasks></div>
+        </div>
       </form>
     </div>
+
+    <template id="taskTemplate">
+      <div class="taskContainer" data-task-lists>
+        <input type="checkbox" name="tasks" id="tasks" />
+        <label for="tasks"></label>
+        <button class="delete-task">⛔</button>
+      </div>
+    </template>
   </body>
 </html>
