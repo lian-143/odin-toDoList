@@ -1,9 +1,9 @@
 class createTask {
-  constructor(title, description, priority) {
+  constructor(title, description, priority, dueDate) {
     (this.title = title),
       (this.description = description),
       (this.priority = priority),
-      (this.dueDate = new Date().toLocaleDateString()),
+      (this.dueDate = dueDate),
       (this.id = Date.now().toString());
     this.complete = false;
   }
