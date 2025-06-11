@@ -7,44 +7,72 @@
     <!-- <link rel="stylesheet" href="./style.css" /> -->
   <script defer src="main.js"></script></head>
   <body>
-    <h1>Odin To Do List</h1>
     <div class="project-container">
       <div class="project-list">
         <h1>Projects</h1>
-        <ul class="allProjects" data-lists></ul>
+        <form action="" data-projectList-form>
+          <input
+            type="text"
+            data-projectList-input
+            id="project-name"
+            name="project-name"
+            placeholder="Add Project"
+          />
+          <button class="saveBtn">+</button>
+        </form>
+        <ul class="allProjects" data-lists>
+          <li class="defaultProject">default</li>
+        </ul>
       </div>
-      <form action="" data-projectList-form>
-        <input
-          type="text"
-          data-projectList-input
-          id="project-name"
-          name="project-name"
-          placeholder="Add Project"
-        />
-        <button class="saveBtn">+</button>
-      </form>
     </div>
 
     <div class="toDoListContainer">
       <div class="toDoHeader">
         <h1>To Do List</h1>
-        <h2>0 tasks remaining</h2>
+        <h1 class="projectName">Default</h1>
+        <h2 id="taskCount"></h2>
       </div>
-    </div>
-    <div class="taskContainer">
-      <form action="" data-taskList-form>
-        <div class="inputForm-newTodo">
-          <input
-            type="text"
-            data-taskList-input
-            id="task-name"
-            name="task-name"
-            placeholder="New ToDo"
-          />
-          <button class="saveBtnTask">+</button>
-          <div class="taskLists" data-tasks></div>
+
+      <dialog id="dialog">
+        <div class="taskContainer">
+          <form action="" data-taskList-form>
+            <div class="inputForm-newTodo">
+              <!-- input -->
+              <label for="task-name">Title</label>
+              <input
+                type="text"
+                data-taskList-title
+                id="task-name"
+                name="task-name"
+                placeholder="Enter title"
+              />
+              <label for="description">Enter Description</label>
+              <textarea
+                name="description"
+                data-taskList-description
+                id="description"
+                placeholder="Enter Description"
+                rows="5"
+                cols="33"
+              ></textarea>
+              <input type="date" data-taskList-date id="date" name="date" />
+              <label for="priority">Priority</label>
+              <select name="priority" id="priority" data-taskList-priority>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+              </select>
+
+              <button class="close">close</button>
+              <button class="saveBtnTask">Submit</button>
+            </div>
+          </form>
         </div>
-      </form>
+      </dialog>
+      <button class="show">Add new task</button>
+
+      <!-- list of tasks -->
+      <div class="taskLists" data-tasks></div>
     </div>
 
     <template id="taskTemplate">
@@ -52,6 +80,9 @@
         <input type="checkbox" name="tasks" id="tasks" />
         <label for="tasks"></label>
         <button class="delete-task">⛔</button>
+        <p id="domDescription"></p>
+        <p id="domDate"></p>
+        <p id="priority"></p>
       </div>
     </template>
   </body>
