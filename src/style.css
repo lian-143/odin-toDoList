@@ -1,0 +1,195 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
+/*
+  Josh's Custom CSS Reset
+  https://www.joshwcomeau.com/css/custom-css-reset/
+*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  font-family: "Roboto", sans-serif;
+  display: grid;
+  grid-template-columns: 4em 1fr 2fr 4em;
+  grid-template-areas: "... project tasks ...";
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+p {
+  text-wrap: pretty;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+#root,
+#__next {
+  isolation: isolate;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+button {
+  border: none;
+}
+
+li {
+  margin: 3em 0;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+img {
+  width: 1em;
+  height: 1em;
+  object-fit: cover;
+}
+
+.project-container {
+  background-color: #222831;
+  grid-area: project;
+  grid-column: 1/3;
+}
+
+.toDoListContainer {
+  background-color: #393e46;
+  grid-area: tasks;
+  grid-column: 3/5;
+}
+
+.todoGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "header header";
+}
+
+.project-container,
+.toDoListContainer {
+  padding: 4em;
+  color: #fff;
+}
+
+.projectForm {
+  margin: 2em 0;
+  display: flex;
+  gap: 0.8em;
+}
+
+.lightBtn {
+  background-color: #a4b465;
+  cursor: pointer;
+}
+
+.lightBtn:hover,
+li:hover {
+  color: #222831;
+  background-color: #ffcf50;
+}
+
+li:hover {
+  padding: 0.8em;
+  font-size: 1.1rem;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+}
+
+button.saveBtn {
+  border-radius: 0.2em;
+  padding: 0.5em 1em;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+button.deleteBtn {
+  cursor: pointer;
+  background: transparent;
+}
+
+button.deleteBtn:hover {
+  background-color: #ffa09b;
+  border-radius: 10%;
+  padding: 0.2em;
+}
+
+button.taskDeleteBtn {
+  background-color: #393e46;
+}
+
+input#project-name {
+  border-radius: 0.5em;
+  padding: 0.7em;
+  border: none;
+  font-weight: 500;
+}
+
+ul.allProjects {
+  list-style-type: none;
+  margin-left: 0.5em;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* task */
+.toDoHeader {
+  grid-area: header;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button.show.lightBtn {
+  grid-column: 1/-1;
+}

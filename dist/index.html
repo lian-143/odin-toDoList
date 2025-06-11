@@ -4,32 +4,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To Do List</title>
-    <!-- <link rel="stylesheet" href="./style.css" /> -->
   <script defer src="main.js"></script></head>
   <body>
     <div class="project-container">
       <div class="project-list">
         <h1>Projects</h1>
-        <form action="" data-projectList-form>
-          <input
-            type="text"
-            data-projectList-input
-            id="project-name"
-            name="project-name"
-            placeholder="Add Project"
-          />
-          <button class="saveBtn">+</button>
-        </form>
-        <ul class="allProjects" data-lists>
-          <li class="defaultProject">default</li>
-        </ul>
+        <div class="inputProjectContainer">
+          <form action="" class="projectForm" data-projectList-form>
+            <button class="saveBtn lightBtn">+</button>
+            <input
+              type="text"
+              data-projectList-input
+              id="project-name"
+              name="project-name"
+              placeholder="Add Project"
+            />
+          </form>
+        </div>
+        <ul class="allProjects" data-lists></ul>
       </div>
     </div>
 
     <div class="toDoListContainer">
       <div class="toDoHeader">
         <h1>To Do List</h1>
-        <h1 class="projectName">Default</h1>
+        <h1 class="projectName"></h1>
         <h2 id="taskCount"></h2>
       </div>
 
@@ -69,7 +68,7 @@
           </form>
         </div>
       </dialog>
-      <button class="show">Add new task</button>
+      <button class="show lightBtn">Add new task</button>
 
       <!-- list of tasks -->
       <div class="taskLists" data-tasks></div>
@@ -79,7 +78,9 @@
       <div class="taskContainer" data-task-lists>
         <input type="checkbox" name="tasks" id="tasks" />
         <label for="tasks"></label>
-        <button class="delete-task">⛔</button>
+        <button class="deleteBtn">
+          <img src="/src/images/delete.png" alt="trash icon" />
+        </button>
         <p id="domDescription"></p>
         <p id="domDate"></p>
         <p id="priority"></p>

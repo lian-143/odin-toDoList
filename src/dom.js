@@ -74,12 +74,23 @@ taskForm.addEventListener("submit", (e) => {
 function defaultProject() {
   if (storage.projectLists.length === 0) {
     const defaultProj = new Project("Default");
+    let currentDate = new Date().toISOString().slice(0, 10);
+
+    const defaultTask = new createTask(
+      "Complete UI Design",
+      "Responsive wesite",
+      "Low",
+      currentDate
+    );
+
+    defaultProj.tasks.push(defaultTask);
     storage.projectLists.push(defaultProj);
     storage.save();
   }
-
   currentProjectId = storage.projectLists[0].id;
   projectName.textContent = storage.projectLists[0].title;
+  renderList();
+  renderTasks();
 }
 
 function renderList() {
@@ -91,18 +102,18 @@ function renderList() {
     if (project.id === currentProjectId) li.classList.add("selected");
 
     const deleteBtn = document.createElement("button");
+    const image = document.createElement("img");
+    image.src = require("./images/delete.png");
     deleteBtn.classList.add("deleteBtn");
-    deleteBtn.textContent = "⛔";
+    deleteBtn.appendChild(image);
     deleteBtn.dataset.listBtn = project.id;
 
     deleteBtn.addEventListener("click", projectDeleteBtn);
-
     li.appendChild(deleteBtn);
 
     li.addEventListener("click", (e) => {
       currentProjectId = project.id;
       projectName.textContent = project.title;
-      console.log("Selected project:", project.title);
       renderTasks();
       renderTaskCount();
     });
@@ -133,7 +144,7 @@ function renderTasks() {
     const domDescription = clone.querySelector("p#domDescription");
     const domDate = clone.querySelector("p#domDate");
     const domPriority = clone.querySelector("p#priority");
-    const deleteBtn = clone.querySelector("button.delete-task");
+    const deleteBtn = clone.querySelector("button.taskDeleteBtn");
     checkbox.id = task.id;
     labelTitle.htmlFor = task.id;
     labelTitle.append(task.title);
@@ -148,8 +159,11 @@ function renderTasks() {
       renderTaskCount();
     });
 
+    const image = document.createElement("img");
+    image.src = require("./images/delete.png");
+    deleteBtn.style.backgroundImage = image;
     deleteBtn.dataset.taskBtn = task.id;
-    console.log(task);
+    deleteBtn.appendChild(image);
     deleteBtn.addEventListener("click", taskDeleteBtn);
   });
 
@@ -228,8 +242,6 @@ function renderTaskCount() {
   } else {
     taskCount.textContent = "0 task remaining";
   }
-  // console.log(taskCount);
-  // console.log(incompleteTaskCount);
 }
 
 modalForm();
