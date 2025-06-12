@@ -26,61 +26,61 @@
     </div>
 
     <div class="toDoListContainer">
-      <div class="toDoHeader">
-        <h1>To Do List</h1>
-        <h1 class="projectName"></h1>
-        <h2 id="taskCount"></h2>
-      </div>
-
-      <dialog id="dialog">
-        <div class="taskContainer">
-          <form action="" data-taskList-form>
-            <div class="inputForm-newTodo">
-              <!-- input -->
-              <label for="task-name">Title</label>
-              <input
-                type="text"
-                data-taskList-title
-                id="task-name"
-                name="task-name"
-                placeholder="Enter title"
-              />
-              <label for="description">Enter Description</label>
-              <textarea
-                name="description"
-                data-taskList-description
-                id="description"
-                placeholder="Enter Description"
-                rows="5"
-                cols="33"
-              ></textarea>
-              <input type="date" data-taskList-date id="date" name="date" />
-              <label for="priority">Priority</label>
-              <select name="priority" id="priority" data-taskList-priority>
-                <option value="Low">Low</option>
-                <option value="Medium">Medium</option>
-                <option value="High">High</option>
-              </select>
-
-              <button class="close">close</button>
-              <button class="saveBtnTask">Submit</button>
-            </div>
-          </form>
+      <div class="todoGrid">
+        <div class="toDoHeader">
+          <h1>To Do List</h1>
+          <h2 id="taskCount"></h2>
         </div>
-      </dialog>
-      <button class="show lightBtn">Add new task</button>
+        <button class="show lightBtn">Add new task</button>
+        <h1 class="projectName"></h1>
 
-      <!-- list of tasks -->
-      <div class="taskLists" data-tasks></div>
+        <dialog id="dialog">
+          <div class="taskContainer">
+            <form action="" data-taskList-form>
+              <div class="inputForm-newTodo">
+                <!-- input -->
+                <label for="task-name">Title</label>
+                <input
+                  type="text"
+                  data-taskList-title
+                  id="task-name"
+                  name="task-name"
+                  placeholder="Enter title"
+                />
+                <label for="description">Enter Description</label>
+                <textarea
+                  name="description"
+                  data-taskList-description
+                  id="description"
+                  placeholder="Enter Description"
+                  rows="5"
+                  cols="33"
+                ></textarea>
+                <input type="date" data-taskList-date id="date" name="date" />
+                <label for="priority">Priority</label>
+                <select name="priority" id="priority" data-taskList-priority>
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                </select>
+
+                <button class="close">close</button>
+                <button class="saveBtnTask">Submit</button>
+              </div>
+            </form>
+          </div>
+        </dialog>
+
+        <!-- list of tasks -->
+        <div class="taskLists" data-tasks></div>
+      </div>
     </div>
 
     <template id="taskTemplate">
       <div class="taskContainer" data-task-lists>
         <input type="checkbox" name="tasks" id="tasks" />
         <label for="tasks"></label>
-        <button class="deleteBtn">
-          <img src="/src/images/delete.png" alt="trash icon" />
-        </button>
+        <button class="taskDeleteBtn"></button>
         <p id="domDescription"></p>
         <p id="domDate"></p>
         <p id="priority"></p>
