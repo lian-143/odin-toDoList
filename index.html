@@ -34,12 +34,12 @@
         <button class="show lightBtn">Add new task</button>
         <h1 class="projectName"></h1>
 
-        <dialog id="dialog">
-          <div class="taskContainer">
+        <dialog id="dialog" open>
+          <div class="taskFormContainer">
             <form action="" data-taskList-form>
               <div class="inputForm-newTodo">
                 <!-- input -->
-                <label for="task-name">Title</label>
+                <label for="task-name">Title:</label>
                 <input
                   type="text"
                   data-taskList-title
@@ -47,7 +47,9 @@
                   name="task-name"
                   placeholder="Enter title"
                 />
-                <label for="description">Enter Description</label>
+              </div>
+              <div class="inputDescriptionForm">
+                <label for="description">Enter Description:</label>
                 <textarea
                   name="description"
                   data-taskList-description
@@ -56,15 +58,16 @@
                   rows="5"
                   cols="33"
                 ></textarea>
-                <input type="date" data-taskList-date id="date" name="date" />
-                <label for="priority">Priority</label>
-                <select name="priority" id="priority" data-taskList-priority>
-                  <option value="Low">Low</option>
-                  <option value="Medium">Medium</option>
-                  <option value="High">High</option>
-                </select>
-
-                <button class="close">close</button>
+              </div>
+              <input type="date" data-taskList-date id="date" name="date" />
+              <label for="priority">Priority:</label>
+              <select name="priority" id="priority" data-taskList-priority>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+              </select>
+              <div class="formBtn">
+                <button class="close">Close</button>
                 <button class="saveBtnTask">Submit</button>
               </div>
             </form>
@@ -78,12 +81,17 @@
 
     <template id="taskTemplate">
       <div class="taskContainer" data-task-lists>
-        <input type="checkbox" name="tasks" id="tasks" />
-        <label for="tasks"></label>
-        <button class="taskDeleteBtn"></button>
-        <p id="domDescription"></p>
-        <p id="domDate"></p>
-        <p id="priority"></p>
+        <div class="taskNameGrid">
+          <input type="checkbox" name="tasks" id="tasks" />
+          <label for="tasks"></label>
+          <p id="domDescription"></p>
+        </div>
+
+        <div class="dueDate">
+          <p id="domDate"></p>
+          <p id="priority"></p>
+          <button class="taskDeleteBtn"></button>
+        </div>
       </div>
     </template>
   </body>
