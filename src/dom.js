@@ -91,6 +91,7 @@ function defaultProject() {
   projectName.textContent = storage.projectLists[0].title;
   renderList();
   renderTasks();
+  // editBtnModal();
 }
 
 function renderList() {
@@ -101,13 +102,19 @@ function renderList() {
     li.dataset.listId = project.id;
     if (project.id === currentProjectId) li.classList.add("selected");
 
+    const editBtn = document.createElement("button");
+    editBtn.dataset.editListBtn = project.id;
+    editBtn.classList.add("editBtn");
+    editBtn.textContent = "-";
+    editBtn.addEventListener("click", editBtnModal);
+    li.appendChild(editBtn);
+
     const deleteBtn = document.createElement("button");
     const image = document.createElement("img");
     image.src = require("./images/delete.png");
     deleteBtn.classList.add("deleteBtn");
     deleteBtn.appendChild(image);
     deleteBtn.dataset.listBtn = project.id;
-
     deleteBtn.addEventListener("click", projectDeleteBtn);
     li.appendChild(deleteBtn);
 
@@ -223,6 +230,43 @@ function taskDeleteBtn(e) {
     renderTasks();
     renderTaskCount();
   }
+}
+
+function editBtnModal(e) {
+  const dialogElemProject = document.getElementById("dialogProject");
+  const saveBtnProject = document.querySelector(".saveBtnProject");
+  let input = document.querySelector("[data-projectList-modal]");
+
+  // everytime you click edit button, a dialog of input add project will appear
+  dialogElemProject.showModal();
+
+  let projectId = e.currentTarget.dataset.editListBtn;
+
+  const project = storage.projectLists.find(
+    (selected) => selected.id === projectId
+  );
+  if (!project) return;
+
+  saveBtnProject.addEventListener(
+    "click",
+    (e) => {
+      e.preventDefault();
+      if (!input.value) {
+        dialogElemProject.close();
+        return;
+      }
+
+      if (projectId === project.id) {
+        project.title = input.value;
+        projectName.textContent = project.title;
+        storage.save();
+        dialogElemProject.close();
+        renderList();
+      }
+    },
+    { once: true }
+  );
+  input.value = "";
 }
 
 function renderTaskCount() {

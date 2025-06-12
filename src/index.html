@@ -22,6 +22,25 @@
           </form>
         </div>
         <ul class="allProjects" data-lists></ul>
+        <!-- dialog project -->
+        <dialog id="dialogProject">
+          <div class="inputProjectContainer">
+            <form
+              action=""
+              class="projectFormModal"
+              data-projectList-form-modal
+            >
+              <button class="saveBtnProject lightBtn">+</button>
+              <input
+                type="text"
+                data-projectList-modal
+                id="project-name-dialog"
+                name="project-name-dialog"
+                placeholder="Add Project"
+              />
+            </form>
+          </div>
+        </dialog>
       </div>
     </div>
 
@@ -32,9 +51,10 @@
           <h2 id="taskCount"></h2>
         </div>
         <button class="show lightBtn">Add new task</button>
+
         <h1 class="projectName"></h1>
 
-        <dialog id="dialog" open>
+        <dialog id="dialog">
           <div class="taskFormContainer">
             <form action="" data-taskList-form>
               <div class="inputForm-newTodo">
