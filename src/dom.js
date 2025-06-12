@@ -105,7 +105,7 @@ function renderList() {
     const editBtn = document.createElement("button");
     editBtn.dataset.editListBtn = project.id;
     editBtn.classList.add("editBtn");
-    editBtn.textContent = "-";
+    editBtn.textContent = "✍️";
     editBtn.addEventListener("click", editBtnModal);
     li.appendChild(editBtn);
 
