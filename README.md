@@ -1,5 +1,7 @@
 # Todo List App
 
+**Live Demo:** [View the app](https://lian-143.github.io/odin-toDoList/)
+
 A simple web application to organize and track tasks by project.
 
 ## Basic Functionality
