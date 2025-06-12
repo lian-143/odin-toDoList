@@ -78,7 +78,7 @@ function defaultProject() {
 
     const defaultTask = new createTask(
       "Complete UI Design",
-      "Responsive wesite",
+      "Responsive website",
       "Low",
       currentDate
     );
@@ -137,6 +137,7 @@ function renderTasks() {
   );
 
   const ul = document.createElement("ul");
+  ul.classList.add("task-card");
   project.tasks.forEach((task) => {
     const clone = document.importNode(taskTemplate.content, true);
     const checkbox = clone.querySelector("input[type=checkbox]");
@@ -146,6 +147,7 @@ function renderTasks() {
     const domPriority = clone.querySelector("p#priority");
     const deleteBtn = clone.querySelector("button.taskDeleteBtn");
     checkbox.id = task.id;
+    checkbox.classList.add("checkBoxAlignment");
     labelTitle.htmlFor = task.id;
     labelTitle.append(task.title);
     domDescription.append(task.description);
