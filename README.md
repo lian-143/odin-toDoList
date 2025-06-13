@@ -6,8 +6,8 @@ A simple web application to organize and track tasks by project.
 
 ## Basic Functionality
 
-- Create, view, and delete projects
-- Add and remove tasks with a title, due date, and priority level
+- Create, view, edit, and delete projects
+- Add, edit and remove tasks with a title, due date, and priority level
 - Mark tasks as complete or incomplete
 - Automatically save and load data using the Web Storage API (`localStorage`)
 
