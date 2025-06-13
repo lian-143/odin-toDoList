@@ -90,8 +90,8 @@ li {
 }
 
 img {
-  width: 1em;
-  height: 1em;
+  /* width: 0.8em; */
+  max-height: 1em;
   object-fit: cover;
 }
 
@@ -125,7 +125,12 @@ img {
 .projectForm {
   margin: 2em 0;
   display: flex;
+  flex-wrap: wrap;
   gap: 0.8em;
+}
+
+input#project-name {
+  width: 81%;
 }
 
 h1.projectName {
@@ -143,15 +148,28 @@ li:hover {
   background-color: #ffcf50;
 }
 
-li:hover {
-  padding: 0.8em;
-  font-size: 1.1rem;
-  font-weight: 700;
+li.selected {
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 
-button.saveBtn {
+li:hover {
+  padding: 1em;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+div.projectBtnContainer {
+  display: flex;
+  align-items: center;
+}
+
+/* button.editBtn {
+} */
+
+button.saveBtn,
+.projectFormModal > button.saveBtnProject.addProjectBtn.lightBtn {
   border-radius: 0.2em;
   padding: 0.5em 1em;
   font-size: 1.1rem;
@@ -159,25 +177,43 @@ button.saveBtn {
 }
 
 button.deleteBtn,
-button.taskDeleteBtn {
+button.taskDeleteBtn,
+button.editBtn,
+button.editTaskBtn {
   background: transparent;
+}
+
+button.editBtn:hover,
+button.editTaskBtn:hover {
+  background-color: #ffe9ae;
+  border-radius: 10%;
 }
 
 button.deleteBtn:hover {
   background-color: #ffa09b;
   border-radius: 10%;
-  padding: 0.5em;
+  padding: 0.2em;
 }
 
 button.taskDeleteBtn {
   background-color: #393e46;
 }
 
-input#project-name {
+dialog#dialogProject {
+  border-radius: 0.3em;
+}
+
+input#project-name,
+input#project-name-dialog {
   border-radius: 0.5em;
   padding: 0.7em;
   border: none;
   font-weight: 500;
+}
+
+input#project-name-dialog {
+  border: 1px solid black;
+  margin-left: 0.5em;
 }
 
 ul.allProjects {
@@ -195,7 +231,7 @@ ul.allProjects {
   align-items: center;
 }
 
-button.show.lightBtn {
+button.showProject.lightBtn {
   grid-column: 1/-1;
   margin: 1.5em 0;
   padding: 0.6em 0;
@@ -241,12 +277,17 @@ p#priority {
 
 div.dueDate {
   display: grid;
+  align-items: center;
+  justify-content: center;
   grid-template-columns: 1fr 1fr 1fr;
 }
 
+div.taskButtonContainer {
+  display: flex;
+}
+
 button.taskDeleteBtn {
-  justify-self: end;
-  align-self: start;
+  align-self: center;
 }
 
 button.taskDeleteBtn:hover {

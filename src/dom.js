@@ -17,8 +17,11 @@ const inputTaskDate = document.querySelector("[data-taskList-date]");
 const inputTaskPriority = document.querySelector("[data-taskList-priority]");
 const taskContainer = document.querySelector("[data-tasks]");
 const taskTemplate = document.getElementById("taskTemplate");
+const dialogElem = document.getElementById("dialog");
 
 let currentProjectId = null;
+let editId = null;
+let mode = "add";
 
 // form submission for new project
 projectForm.addEventListener("submit", (e) => {
@@ -30,7 +33,6 @@ projectForm.addEventListener("submit", (e) => {
     const name = inputProjectValue.value;
     if (!name) return;
     const projectList = new Project(name);
-    console.log(projectList);
     storage.projectLists.push(projectList);
     storage.save();
     // render it to the list
@@ -45,28 +47,38 @@ taskForm.addEventListener("submit", (e) => {
   const taskDescription = inputTaskDescription.value;
   const taskDate = inputTaskDate.value;
   const taskPriority = inputTaskPriority.value;
-
-  if (!taskName || !taskDescription || !taskDate) return;
-  const task = new createTask(
-    taskName,
-    taskDescription,
-    taskPriority,
-    taskDate
-  );
-
   const project = storage.projectLists.find(
     (list) => list.id === currentProjectId
   );
 
+  if (!taskName || !taskDescription || !taskDate) return;
   if (!project) return;
-  project.tasks.push(task);
-  storage.save();
-  // reset
-  inputTaskTitle.value = null;
-  inputTaskDescription.value = null;
-  inputTaskDate.value = null;
-  inputTaskPriority.value = "Low";
 
+  if (mode === "add") {
+    const task = new createTask(
+      taskName,
+      taskDescription,
+      taskPriority,
+      taskDate
+    );
+
+    project.tasks.push(task);
+    storage.save();
+
+    inputTaskTitle.value = "";
+    inputTaskDescription.value = "";
+    inputTaskDate.value = "";
+    inputTaskPriority.value = "Low"; // Reset to default priority
+  } else if (mode === "edit") {
+    const task = project.tasks.find((task) => task.id === editId);
+    task.title = taskName;
+    task.description = taskDescription;
+    task.dueDate = taskDate;
+    task.priority = taskPriority;
+  }
+
+  storage.save();
+  renderList();
   renderTasks();
   renderTaskCount();
 });
@@ -91,7 +103,6 @@ function defaultProject() {
   projectName.textContent = storage.projectLists[0].title;
   renderList();
   renderTasks();
-  // editBtnModal();
 }
 
 function renderList() {
@@ -100,6 +111,10 @@ function renderList() {
     const li = document.createElement("li");
     li.textContent = project.title;
     li.dataset.listId = project.id;
+    const div = document.createElement("div");
+    div.classList.add("projectBtnContainer");
+    li.appendChild(div);
+
     if (project.id === currentProjectId) li.classList.add("selected");
 
     const editBtn = document.createElement("button");
@@ -107,7 +122,7 @@ function renderList() {
     editBtn.classList.add("editBtn");
     editBtn.textContent = "✍️";
     editBtn.addEventListener("click", editBtnModal);
-    li.appendChild(editBtn);
+    div.appendChild(editBtn);
 
     const deleteBtn = document.createElement("button");
     const image = document.createElement("img");
@@ -116,7 +131,7 @@ function renderList() {
     deleteBtn.appendChild(image);
     deleteBtn.dataset.listBtn = project.id;
     deleteBtn.addEventListener("click", projectDeleteBtn);
-    li.appendChild(deleteBtn);
+    div.appendChild(deleteBtn);
 
     li.addEventListener("click", (e) => {
       currentProjectId = project.id;
@@ -127,6 +142,65 @@ function renderList() {
     projectListContainer.appendChild(li);
   });
   renderTaskCount();
+}
+
+function openAddModal() {
+  const closeBtn = document.querySelector(".close");
+  const saveBtnTask = document.querySelector(".saveBtnTask");
+  const addTaskBtn = document.querySelector("button.showProject");
+
+  mode = "add";
+  editId = null;
+
+  if (addTaskBtn) {
+    addTaskBtn.addEventListener("click", () => {
+      dialogElem.showModal();
+    });
+  }
+
+  saveBtnTask.addEventListener("click", () => {
+    dialogElem.close();
+  });
+
+  closeBtn.addEventListener("click", () => {
+    dialogElem.close();
+  });
+}
+
+openAddModal();
+
+function openEditModal(taskId) {
+  const closeBtn = document.querySelector(".close");
+  const saveBtnTask = document.querySelector(".saveBtnTask");
+
+  mode = "edit";
+  editId = taskId;
+
+  // objects of tasks
+  const task = storage.projectLists
+    .find((project) => project.id === currentProjectId)
+    .tasks.find((task) => task.id === editId);
+
+  saveBtnTask.addEventListener("click", () => {
+    if (
+      inputTaskTitle.value === task.title &&
+      inputTaskDescription.value === task.description &&
+      inputTaskDate.value === task.dueDate &&
+      inputTaskPriority.value === task.priority
+    ) {
+      dialogElem.close();
+      return;
+    }
+  });
+
+  closeBtn.addEventListener("click", () => {
+    dialogElem.close();
+  });
+
+  inputTaskTitle.value = task.title;
+  inputTaskDescription.value = task.description;
+  inputTaskDate.value = task.dueDate;
+  inputTaskPriority.value = task.priority;
 }
 
 function renderTasks() {
@@ -151,23 +225,49 @@ function renderTasks() {
     const labelTitle = clone.querySelector("label");
     const domDescription = clone.querySelector("p#domDescription");
     const domDate = clone.querySelector("p#domDate");
-    const domPriority = clone.querySelector("p#priority");
+    const editTaskBtn = clone.querySelector("button.editTaskBtn");
     const deleteBtn = clone.querySelector("button.taskDeleteBtn");
-    checkbox.id = task.id;
+
+    checkbox.id = `task-${task.id}`;
     checkbox.classList.add("checkBoxAlignment");
-    labelTitle.htmlFor = task.id;
+    labelTitle.htmlFor = `task-${task.id}`;
     labelTitle.append(task.title);
     domDescription.append(task.description);
     domDate.append(task.dueDate);
-    domPriority.append(task.priority);
     ul.appendChild(clone);
+
+    checkbox.checked = task.complete;
+    if (task.complete) {
+      labelTitle.style.textDecoration = "line-through";
+    } else {
+      labelTitle.style.textDecoration = "none";
+    }
 
     checkbox.addEventListener("click", (e) => {
       task.complete = e.target.checked;
+      if (task.complete) {
+        labelTitle.style.textDecoration = "line-through";
+      } else {
+        labelTitle.style.textDecoration = "none";
+      }
+
       storage.save();
       renderTaskCount();
     });
 
+    // edit button functionality
+    if (editTaskBtn) {
+      editTaskBtn.dataset.taskBtn = task.id;
+      editTaskBtn.textContent = "✍️";
+      editTaskBtn.addEventListener("click", () => {
+        openEditModal(task.id);
+        dialogElem.showModal();
+      });
+    } else {
+      console.error("editTaskBtn is missing in the template.");
+    }
+
+    // delete button functionality
     const image = document.createElement("img");
     image.src = require("./images/delete.png");
     deleteBtn.style.backgroundImage = image;
@@ -178,25 +278,7 @@ function renderTasks() {
 
   taskContainer.appendChild(ul);
   renderTaskCount();
-}
-
-function modalForm() {
-  const dialogElem = document.getElementById("dialog");
-  const showBtn = document.querySelector(".show");
-  const closeBtn = document.querySelector(".close");
-  const saveBtnTask = document.querySelector(".saveBtnTask");
-
-  showBtn.addEventListener("click", () => {
-    dialogElem.showModal();
-  });
-
-  closeBtn.addEventListener("click", () => {
-    dialogElem.close();
-  });
-
-  saveBtnTask.addEventListener("click", () => {
-    dialogElem.close();
-  });
+  storage.save();
 }
 
 function projectDeleteBtn(e) {
@@ -212,6 +294,11 @@ function projectDeleteBtn(e) {
     renderTasks();
     renderTaskCount();
   }
+
+  inputTaskTitle.value = "";
+  inputTaskDescription.value = "";
+  inputTaskDate.value = "";
+  inputTaskPriority.value = "Low"; // Reset to default priority
 }
 
 function taskDeleteBtn(e) {
@@ -230,6 +317,11 @@ function taskDeleteBtn(e) {
     renderTasks();
     renderTaskCount();
   }
+
+  inputTaskTitle.value = "";
+  inputTaskDescription.value = "";
+  inputTaskDate.value = "";
+  inputTaskPriority.value = "Low"; // Reset to default priority
 }
 
 function editBtnModal(e) {
@@ -266,7 +358,7 @@ function editBtnModal(e) {
     },
     { once: true }
   );
-  input.value = "";
+  input.value = project.title;
 }
 
 function renderTaskCount() {
@@ -290,7 +382,6 @@ function renderTaskCount() {
   }
 }
 
-modalForm();
 renderList();
 renderTasks();
 renderTaskCount();
