@@ -31,7 +31,7 @@
               class="projectFormModal"
               data-projectList-form-modal
             >
-              <button class="saveBtnProject lightBtn">+</button>
+              <button class="saveBtnProject addProjectBtn lightBtn">+</button>
               <input
                 type="text"
                 data-projectList-modal
@@ -51,7 +51,7 @@
           <h1>To Do List</h1>
           <h2 id="taskCount"></h2>
         </div>
-        <button class="show lightBtn">Add new task</button>
+        <button class="showProject lightBtn">Add new task</button>
 
         <h1 class="projectName"></h1>
 
@@ -103,7 +103,7 @@
     <template id="taskTemplate">
       <div class="taskContainer" data-task-lists>
         <div class="taskNameGrid">
-          <input type="checkbox" name="tasks" id="tasks" />
+          <input type="checkbox" name="tasks" id="task-{{task.id}}" />
           <label for="tasks"></label>
           <p id="domDescription"></p>
         </div>
@@ -111,7 +111,10 @@
         <div class="dueDate">
           <p id="domDate"></p>
           <p id="priority"></p>
-          <button class="taskDeleteBtn"></button>
+          <div class="taskButtonContainer">
+            <button class="editTaskBtn"></button>
+            <button class="taskDeleteBtn"></button>
+          </div>
         </div>
       </div>
     </template>
